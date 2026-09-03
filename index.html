@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Test Leaflet UCalgary Campus Map</title>
+
+    <!-- Load Leaflet from CDN -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@3.0.19/dist/esri-leaflet.js"></script>
+
+    <script src="https://unpkg.com/esri-leaflet-vector@4.3.2/dist/esri-leaflet-vector.js"></script>
+
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      font-family: 'Bahnschrift', system-ui, calibri, Gill Sans, sans-serif;
+      font-size: 14px;
+      color: #1900ff;
+    }
+    </style>
+  </head>
+
+
+  <body>
+    <div id="map"></div>
+
+    <script>
+
+      /* Use for API key authentication */
+      const accessToken = "AAPTagzlo-z83ABGAXDKNJZY2jQ..iYpLol9I47pRleVeik12K4PBNaB0VwAiQO51qZXgPTHPJK3wyrMRadu3dpliY_BleqzAmWfCn0gsomr3LHDeDTyugv4ZrfkMyiqQMwS1VcUvY3K91ku0V-kcVHxLCPvbi_FEEduPaN5HDtNzAgCa3vysatVxj5oCLbOan7xNYGAc3AkcFuYH8I8b6hxUuBF5vg_lV2eS2kRBg2VLONvJswk25Ej75h4Q_AwuV0C9PpYvAgif0VQGJESvWepXI8kbJkcv6k53T4pJy-U9kQ..AT1_WMnpOefi";
+
+      // or
+
+      /* Use for user authentication */
+      // const session = await arcgisRest.ArcGISIdentityManager.beginOAuth2({
+      //   clientId: "YOUR_CLIENT_ID", // Your client ID from OAuth credentials
+      //   redirectUri: "YOUR_REDIRECT_URI", // The redirect URL registered in your OAuth credentials
+      //   portal: "https://www.arcgis.com/sharing/rest" // Your portal URL
+      // })
+      // const accessToken = session.token;
+
+      /* add the zoom buttons */
+      L.control.zoom();
+
+      /* Declare The Default Basemap */
+      const nova = L.esri.Vector.vectorBasemapLayer("arcgis/nova", {token: accessToken});
+
+      /* Declare Layer(s) */
+      const buildings = L.esri.featureLayer({
+          url: "https://services5.arcgis.com/oegdSE8JU1e7fUHu/arcgis/rest/services/UC_Buildings/FeatureServer/0",
+          
+          style: () => {
+            return {
+              color: "#E1F500", //null for no colour
+              fillColor: "#00DCF5",
+              //dashArray: "2, 3",
+              //dashOffset: "2",
+              weight: "2"
+            };
+          }
+        }); 
+
+      /* Initialize Map */
+      const map = L.map("map", {
+        center: [51.078022, -114.130729], 
+        zoom: 16,
+        layers: [nova, buildings]
+      });
+
+      /* Declare the objects for the layer control */
+
+      /* REMEMBER TO TEST OUT MAKING CUSTOM BASEMAPS WITH THE VECTOR TILE STYLE EDITOR */
+      const basemaps = {
+        "Nova Basemap": nova,
+        "Community Basemap": L.esri.Vector.vectorBasemapLayer("arcgis/community", {token: accessToken}),
+        "Basemapus Barticus": L.esri.Vector.vectorBasemapLayer("8f106c673c5848a2b598d0b7e8700029", {token: accessToken}),
+      };
+
+      const overlays = {
+        "Buildings": buildings,
+      };
+
+      /* Add layer control to the map */
+      L.control.layers(basemaps, overlays, {
+        position: 'topright', // Optional: 'topleft', 'bottomleft', 'bottomright'
+        collapsed: true     // Optional: set false to keep menu open by default
+      }).addTo(map);
+
+      /* Add a popup */
+      buildings.bindPopup(function (layer) {
+        return L.Util.template("<b>{BuildingName}</b><br>{BuildingAddress}<br><img src={THUMBNAIL} width='250'><br><a href={Floorplan}>Floorplan PDF</a>", layer.feature.properties);
+      });
+      /* add a tooltip showing the Building ID */
+      buildings.bindTooltip(function (layer) {
+        return L.Util.template("<b>{BLD_ID}</b><br><i>Click for more info...</i>",layer.feature.properties)
+      }).openTooltip();
+
+    </script>
+
+  </body>
+
+
+</html>
+
