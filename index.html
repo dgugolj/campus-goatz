@@ -120,7 +120,7 @@
 
       /* add a tooltip to the POI layer - showing  */
       poi.bindTooltip(function (layer) {
-        return L.Util.template("<b>{NAME}</b><br><img src={Picture} width='250'>",layer.feature.properties)
+        return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
       }).openTooltip();
 
     </script>
