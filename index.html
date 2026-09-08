@@ -118,11 +118,13 @@
         return L.Util.template("<b>{BLD_ID}</b><br><i>Click for more info...</i>",layer.feature.properties)
       }).openTooltip();
 
+      
       /* add a tooltip to the POI layer - showing  */
-     poi.bindTooltip(function (layer) {
-        return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
-      }).openTooltip();
+    // poi.bindTooltip(function (layer) {
+     //   return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
+     // }).openTooltip();
 
+      poi.bindTooltip("POI").openTooltip();
     </script>
 
   </body>
