@@ -116,7 +116,7 @@
 
       /* add a tooltipo to the POI layer - showing  */
       poi.bindTooltip(function (layer) {
-        return L.Util.template("{NAME}",layer.feature.properties), permanent: true,
+        return L.Util.template("{NAME}",layer.feature.properties),
       }).openTooltip();
       
       /* add a tooltip showing the Building ID */
