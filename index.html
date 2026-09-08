@@ -119,9 +119,9 @@
       }).openTooltip();
 
       /* add a tooltip to the POI layer - showing  */
-      poi.bindTooltip(function (layer) {
-        return L.Util.template("<b>Point of Interest</b>",layer.feature.properties)
-      }).openTooltip(); //
+     poi.bindTooltip(function (layer) {
+        return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
+      }).openTooltip();
 
     </script>
 
