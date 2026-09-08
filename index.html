@@ -118,6 +118,8 @@
       poi.bindTooltip(function (layer) {
         return L.Util.template("{NAME}",layer.feature.properties)
       }).openTooltip();
+
+      poi.unbindTooltip()
       
       /* add a tooltip showing the Building ID */
       buildings.bindTooltip(function (layer) {
