@@ -115,13 +115,13 @@
       });
       /* add a tooltip showing the Building ID */
       buildings.bindTooltip(function (layer) {
-        return L.Util.template("<b>{BLD_ID}</b><br><i>Click for more info...</i>",layer.feature.properties)
+        return L.Util.template("<b>{BLD_ID}</b><br><i>Click for more infos...</i>",layer.feature.properties)
       }).openTooltip();
 
       /* add a tooltip to the POI layer - showing  */
       poi.bindTooltip(function (layer) {
         return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
-      }).openTooltip();
+      }).openTooltip(); //
 
     </script>
 
