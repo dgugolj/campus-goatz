@@ -114,17 +114,15 @@
         return L.Util.template("<b>{BuildingName}</b><br>{BuildingAddress}<br><img src={THUMBNAIL} width='250'><br><a href={Floorplan}>Floorplan PDF</a>", layer.feature.properties);
       });
       /* add a tooltip showing the Building ID */
-      buildings.bindTooltip(function (layer) {
-        return L.Util.template("<b>{BLD_ID}</b><br><i>Click for more info...</i>",layer.feature.properties)
-      }).openTooltip();
-
-      poi.bindPopup(function (layer) {
-        return L.Util.template("<b>{NAME}</b>", layer.feature.properties);
-      });
-      /* add a  to the POI layer - showing  */
-    // poi.bindTooltip(function (layer) {
-     //   return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
+     // buildings.bindTooltip(function (layer) {
+      //  return L.Util.template("<b>{BLD_ID}</b><br><i>Click for more info...</i>",layer.feature.properties)
      // }).openTooltip();
+
+
+      /* add a  to the POI layer - showing  */
+      poi.bindTooltip(function (layer) {
+        return L.Util.template("<b>{NAME}</b>",layer.feature.properties)
+      }).openTooltip();
 
       //poi.bindTooltip("POI").openTooltip();
     </script>
